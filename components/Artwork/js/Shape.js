@@ -116,6 +116,6 @@ export default class Shape{
         this.mesh.rotation.y += Common.time.delta;
         
 
-        this.uniforms.uProgress.value.lerp(this.transitionTraget, 0.02);
+        this.uniforms.uProgress.value.lerp(this.transitionTraget, 2.5 * Common.time.delta);
     }
 }

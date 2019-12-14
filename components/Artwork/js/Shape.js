@@ -9,7 +9,7 @@ import EventBus from "~/utils/event-bus";
 
 export default class Shape{
     constructor(){
-        this.segments = 100;
+        this.segments = 80;
         this.init();
     }
 
@@ -114,8 +114,6 @@ export default class Shape{
 
     update(){
         this.mesh.rotation.y += Common.time.delta;
-        
-
-        this.uniforms.uProgress.value.lerp(this.transitionTraget, 2.5 * Common.time.delta);
+        this.uniforms.uProgress.value.lerp(this.transitionTraget, 3.5 * Common.time.delta);
     }
 }

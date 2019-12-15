@@ -55,7 +55,8 @@ export default {
     routes: [
       '/',
       '/about',
-      '/contact'
+      '/contact',
+      '404'
     ]
   }
 }

@@ -1,12 +1,15 @@
 <template>
-  <div class="container">
+  <div>
   </div>
 </template>
 
 <script>
+
 export default {
+  props: ['error'],
   components: {
   },
+  layout: "default"
 }
 </script>
 

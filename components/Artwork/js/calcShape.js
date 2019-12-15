@@ -35,5 +35,15 @@ export default {
         const _z = n * Math.sin( v );
 
         return {x: _x, y: _y, z: _z};
+    },
+    ribbon: function(x, y){
+        const u = -x * 2.0 * Math.PI;
+        const v = y * Math.PI;
+
+        const _x = Math.sin(u) * Math.sin(v);
+        const _y = Math.cos(u) * Math.cos(v);
+        const _z = Math.cos(v);
+
+        return {x: _x * 3.0, y: _y * 3.0, z: _z * 3.0};
     }
 }

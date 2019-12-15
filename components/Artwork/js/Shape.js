@@ -11,19 +11,20 @@ export default class Shape{
     constructor(){
         this.segments = 80;
         this.init();
+       
     }
 
     init(){
         EventBus.$on("TRANSITION", this.onTransition.bind(this));
 
-        this.transitionTraget = new THREE.Vector3(1, 0, 0);
+        this.transitionTarget = new THREE.Vector4(0, 0, 0, 0);
 
         this.geometry =  new THREE.BufferGeometry();
         this.setPositions();
         this.currentNum = 0;
         this.uniforms = {
             uProgress: {
-                value: new THREE.Vector3(0, 0, 0)
+                value: new THREE.Vector4(0, 0, 0, 0)
             },
         };
 
@@ -44,37 +45,48 @@ export default class Shape{
     onTransition(path){
         switch(path){
             case "index": 
-            this.transitionTraget.set(1, 0, 0);
+            this.transitionTarget.set(1, 0, 0, 0);
             break;
 
             case "about":
-            this.transitionTraget.set(0, 1, 0);
+            this.transitionTarget.set(0, 1, 0, 0);
             break;
 
             case "contact":
-            this.transitionTraget.set(0, 0, 1);
+            this.transitionTarget.set(0, 0, 1, 0);
             break;
+
+            default: 
+            this.transitionTarget.set(0, 0, 0, 1);
+            break;
+
         }
+
+        console.log(this.transitionTarget);
     }
 
     setPositions(){
         const positions = [];
-        const verticesSphere = [];
-        const verticesTwistTorus = [];
-        const verticesTorus = [];
+        const vertices1 = [];
+        const vertices2 = [];
+        const vertices3 = [];
+        const vertices4 = [];
+
 
 
         for(let i = 0; i <= this.segments; i++){
             const v = i / this.segments;
             for(let j = 0; j <= this.segments; j++){
                 const u = j / this.segments;
-                const sphere = calcShape.sphere(u, v);
-                const tTorus = calcShape.twistTorus(u, v);
-                const torus = calcShape.torus(u, v);
+                const shape1 = calcShape.sphere(u, v);
+                const shape2 = calcShape.twistTorus(u, v);
+                const shape3 = calcShape.torus(u, v);
+                const shape4 = calcShape.ribbon(u, v);
 
-                verticesSphere.push(sphere.x, sphere.y, sphere.z);
-                verticesTwistTorus.push(tTorus.x, tTorus.y, tTorus.z);
-                verticesTorus.push(torus.x, torus.y, torus.z);
+                vertices1.push(shape1.x, shape1.y, shape1.z);
+                vertices2.push(shape2.x, shape2.y, shape2.z);
+                vertices3.push(shape3.x, shape3.y, shape3.z);
+                vertices4.push(shape4.x, shape4.y, shape4.z);
 
                 positions.push(0, 0, 0);
             }
@@ -97,10 +109,10 @@ export default class Shape{
             }
         }
 
-        this.setAttribute("aShape1", verticesSphere);
-        this.setAttribute("aShape2", verticesTwistTorus);
-        this.setAttribute("aShape3", verticesTorus);
-
+        this.setAttribute("aShape1", vertices1);
+        this.setAttribute("aShape2", vertices2);
+        this.setAttribute("aShape3", vertices3);
+        this.setAttribute("aShape4", vertices4);
 
         this.setAttribute("position", positions);
 
@@ -114,6 +126,7 @@ export default class Shape{
 
     update(){
         this.mesh.rotation.y += Common.time.delta;
-        this.uniforms.uProgress.value.lerp(this.transitionTraget, 3.5 * Common.time.delta);
+        const easing = Math.min(1.0, 3.5 * Common.time.delta)
+        this.uniforms.uProgress.value.lerp(this.transitionTarget, easing);
     }
 }

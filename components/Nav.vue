@@ -10,9 +10,6 @@
             <li>
                 <nuxt-link to="/contact">Contact</nuxt-link>
             </li>
-            <li>
-                <nuxt-link to="/random">404</nuxt-link>
-            </li>
         </ul>
     </section>
 </template>

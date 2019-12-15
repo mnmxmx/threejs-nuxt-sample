@@ -15,7 +15,6 @@ export default {
     }
   },
   mounted () {
-    console.log("mounted");
     if(!this.artworkGL) this.artworkGL = new ArtworkGL({
       $canvas: this.$refs.canvas
     });
@@ -28,7 +27,6 @@ export default {
     }
   },
   destroyed(){
-    console.log("destroyed");
   },
   methods: {
   }

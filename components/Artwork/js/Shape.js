@@ -61,8 +61,6 @@ export default class Shape{
             break;
 
         }
-
-        console.log(this.transitionTarget);
     }
 
     setPositions(){
